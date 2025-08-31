@@ -1,2 +1,6 @@
-// Service exports will be added here
-export {};
+/**
+ * Central export for all services
+ */
+
+// Storage services
+export * from './storage';

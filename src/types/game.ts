@@ -172,3 +172,46 @@ export interface GameState {
   isPaused: boolean;
   canResume: boolean;
 }
+
+export interface GameLifecycleEvent {
+  type: 'gameLoaded' | 'gameUnloading' | 'gameUnloaded' | 'gameInitializing' | 'gameInitialized' | 
+        'gameStarting' | 'gameStarted' | 'gamePausing' | 'gamePaused' | 'gameResuming' | 
+        'gameResumed' | 'gameEnding' | 'gameEnded' | 'gameError';
+  gameId: string;
+  timestamp: Date;
+  data?: any;
+}
+
+export interface AccessibilityPlugin {
+  id: string;
+  name: string;
+  description: string;
+  version: string;
+  initialize: (context: AccessibilityContext) => Promise<void>;
+  cleanup: () => Promise<void>;
+  isEnabled: () => boolean;
+  setEnabled: (enabled: boolean) => void;
+}
+
+export interface AccessibilityContext {
+  gameId: string;
+  settings: AccessibilitySettings;
+  services: any; // Will be properly typed when services are available
+}
+
+export interface GamePlugin {
+  id: string;
+  name: string;
+  version: string;
+  type: 'accessibility' | 'analytics' | 'storage' | 'ui' | 'gameplay';
+  initialize: (context: GamePluginContext) => Promise<void>;
+  cleanup: () => Promise<void>;
+  isEnabled: () => boolean;
+  setEnabled: (enabled: boolean) => void;
+}
+
+export interface GamePluginContext {
+  gameId: string;
+  services: any; // Will be properly typed when services are available
+  config: Record<string, any>;
+}
